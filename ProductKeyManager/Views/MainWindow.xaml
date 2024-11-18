@@ -1,0 +1,161 @@
+﻿<Window x:Class="ProductKeyManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductKeyManager"
+        xmlns:xdwpfctls="clr-namespace:Xlfdll.Windows.Presentation.Controls"
+        mc:Ignorable="d"
+        Title="Product Key Manager" Icon="pack://application:,,,/ProductKeyManager.ico"
+        Width="1280" Height="720" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                 ToolBarTray.IsLocked="True"
+                 Style="{StaticResource ModernToolBarStyle}">
+            <Separator/>
+            <Button ContextMenuService.IsEnabled="False" Click="ImportKeysButton_Click">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="MSDN XML..."/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                
+                <StackPanel>
+                    <Image Source="{StaticResource ImportIcon}"/>
+                    <AccessText Text="Import Keys >"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Command="{Binding Path=AboutCommand}">
+                <StackPanel>
+                    <Image Source="{StaticResource AboutIcon}"/>
+                    <AccessText Text="About"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+        </ToolBar>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Product">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <ListBox Grid.Row="0"/>
+                <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True"
+                         Style="{StaticResource ModernToolBarStyle}">
+                    <ToolBar.Resources>
+                        <Style TargetType="Image">
+                            <Setter Property="Width" Value="16"/>
+                        </Style>
+                    </ToolBar.Resources>
+                    
+                    <Button Command="{Binding Path=AddProductCommand}">
+                        <StackPanel>
+                            <Image Source="{StaticResource AddIcon}"/>
+                            <AccessText Text="Add"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=EditProductCommand}">
+                        <StackPanel>
+                            <Image Source="{StaticResource EditIcon}"/>
+                            <AccessText Text="Edit"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=RemoveProductCommand}">
+                        <StackPanel>
+                            <Image Source="{StaticResource RemoveIcon}"/>
+                            <AccessText Text="Remove"/>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+                
+                <xdwpfctls:OverlayStatus Grid.Row="0"
+                                         OverlayText="Click Add Product button to add a product.">
+                    <xdwpfctls:OverlayStatus.Style>
+                        <Style TargetType="xdwpfctls:OverlayStatus">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Products.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </Style>
+                    </xdwpfctls:OverlayStatus.Style>
+                </xdwpfctls:OverlayStatus>
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Grid.Row="0"/>
+            <ToolBar Grid.Row="1" ToolBarTray.IsLocked="True"
+                         Style="{StaticResource ModernToolBarStyle}">
+                <ToolBar.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="16"/>
+                    </Style>
+                </ToolBar.Resources>
+
+                <Button Command="{Binding Path=AddProductCommand}">
+                    <StackPanel>
+                        <Image Source="{StaticResource AddIcon}"/>
+                        <AccessText Text="Add"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding Path=EditProductCommand}">
+                    <StackPanel>
+                        <Image Source="{StaticResource EditIcon}"/>
+                        <AccessText Text="Edit"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding Path=RemoveProductCommand}">
+                    <StackPanel>
+                        <Image Source="{StaticResource RemoveIcon}"/>
+                        <AccessText Text="Remove"/>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+
+            <xdwpfctls:OverlayStatus Grid.Row="0"
+                                     OverlayText="Select a product to show product keys.">
+                <xdwpfctls:OverlayStatus.Style>
+                    <Style TargetType="xdwpfctls:OverlayStatus">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=ProductKeys.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                        <Setter Property="Visibility" Value="Hidden"/>
+                    </Style>
+                </xdwpfctls:OverlayStatus.Style>
+            </xdwpfctls:OverlayStatus>
+        </Grid>
+    </Grid>
+</Window>
